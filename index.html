@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <title>Wasm && Rust</title>
   <script>
-    // fetch("utils.gc.wasm")
-    //   .then(response => response.arrayBuffer())
-    //   .then(result => WebAssembly.instantiate(result))
-      WebAssembly.instantiateStreaming(fetch("utils.gc.wasm"))
-        .then(wasmModule => {
-        const result = wasmModule.instance.exports.add_one(3);
-        const text = document.createTextNode(result);
-        document.body.appendChild(text);
-      })
+    const appendNumberToBody = (number) => {
+      const text = document.createTextNode(number);
+      document.body.appendChild(text);
+    };
+    const importObject = { env: { alert: alert, appendNumberToBody: appendNumberToBody }};
+
+    WebAssembly.instantiateStreaming(fetch('./utils.gc.wasm'), importObject)
+      .then(wasmModule => {
+        wasmModule.instance.exports.run();
+      });
   </script>
 </head>
+<body></body>
 </html>
