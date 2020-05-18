@@ -9,4 +9,4 @@ edition = "2018"
 [dependencies]
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib"]  # Impacts how things are link in compilation.
